@@ -4,13 +4,14 @@ import StudentApp
 from StudentApp.models import Student
 
 
-# Create your views here.
+# Checking if there is a student with the entered phone number or not
 def loginStudent(request):
     studentPhoneNum = request.GET.get('phone')
 
     try:
         student = Student.objects.get(phoneNumber=studentPhoneNum)
 
+        # Creating json from the data taken from the database
         responseData = {"fullName": student.fullName, "birthday": student.birthday, "phoneNumber": student.phoneNumber,
                         "grade": student.grade}
         return JsonResponse({"status": 200, "result": {"student": responseData}, "massage": "دانش آموز یافت شد"})
@@ -19,6 +20,7 @@ def loginStudent(request):
         return JsonResponse({"status": 404, "result": {}, "massage": "دانش آموز یافت نشد"})
 
 
+# Student registration
 def registerStudent(request):
     studentFullName = request.GET.get('name')
     studentPhoneNum = request.GET.get('phone')
